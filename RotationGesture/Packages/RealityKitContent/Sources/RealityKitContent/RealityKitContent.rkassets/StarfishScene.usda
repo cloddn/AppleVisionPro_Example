@@ -1,0 +1,78 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 1.0 (409.100.15)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    def "starfish" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (5.551115e-17, -7.4505797e-9, 0.17453294)
+        }
+        prepend references = @starfish.usdz@
+    )
+    {
+        quatf xformOp:orient = (0.9961947, 3.2468045e-10, -3.7111139e-9, 0.08715575)
+        float3 xformOp:scale = (0.15, 0.15, 0.15)
+        float3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def "starfish_1" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (1.3962634, 0, 0)
+        }
+        prepend references = @starfish.usdz@
+    )
+    {
+        quatf xformOp:orient = (0.76604444, 0.6427876, 0, 0)
+        float3 xformOp:scale = (0.1, 0.1, 0.1)
+        float3 xformOp:translate = (0.35823405, 0.012584552, -0.024053603)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "Materials"
+        {
+            over "M_starFishPreviewSurface"
+            {
+                token outputs:displacement.connect = </Root/starfish_1/Materials/M_starFishPreviewSurface/M_starFishPreviewSurfacePreviewSurface.outputs:displacement>
+                token outputs:surface.connect = </Root/starfish_1/Materials/M_starFishPreviewSurface/M_starFishPreviewSurfacePreviewSurface.outputs:surface>
+
+                over "M_starFishPreviewSurfacePreviewSurface"
+                {
+                    color3f inputs:diffuseColor.connect = </Root/starfish_1/Materials/M_starFishPreviewSurface/diffuseColor_texture.outputs:rgb>
+                    float inputs:metallic.connect = </Root/starfish_1/Materials/M_starFishPreviewSurface/metallic_texture.outputs:r>
+                    normal3f inputs:normal.connect = </Root/starfish_1/Materials/M_starFishPreviewSurface/normal_texture.outputs:rgb>
+                    float inputs:occlusion.connect = </Root/starfish_1/Materials/M_starFishPreviewSurface/occlusion_texture.outputs:r>
+                }
+
+                over "diffuseColor_texture"
+                {
+                    float2 inputs:st.connect = </Root/starfish_1/Materials/M_starFishPreviewSurface/texCoordReader.outputs:result>
+                }
+
+                over "occlusion_texture"
+                {
+                    float2 inputs:st.connect = </Root/starfish_1/Materials/M_starFishPreviewSurface/texCoordReader.outputs:result>
+                }
+
+                over "normal_texture"
+                {
+                    float2 inputs:st.connect = </Root/starfish_1/Materials/M_starFishPreviewSurface/texCoordReader.outputs:result>
+                }
+
+                over "metallic_texture"
+                {
+                    float2 inputs:st.connect = </Root/starfish_1/Materials/M_starFishPreviewSurface/texCoordReader.outputs:result>
+                }
+            }
+        }
+    }
+}
+
